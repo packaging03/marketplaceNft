@@ -59,8 +59,8 @@ const Hero = () => {
             size={50}
           />
           <div>
-            <p className="text-white">0x21...784a</p>
-            <small>@you</small>
+            <p className="text-white font-semibold">0x21...784a</p>
+            <small className="text-pink-800 font-bold">@you</small>
           </div>
         </div>
       </div>
