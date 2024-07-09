@@ -7,9 +7,9 @@ const App = () => {
     <div className="min-h-screen">
       <div className="gradient-bg-hero">
         <Header />
-        <Hero/>
+        <Hero />
       </div>
-      <Artworks/>
+      <Artworks />
     </div>
   );
 };
