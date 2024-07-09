@@ -1,10 +1,15 @@
 import React from "react";
 import Identicon from "react-identicons";
+import { setGlobalState } from "../store";
 
 const imgHero =
   "https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg";
 
 const Hero = () => {
+  const openModal = () => {
+    setGlobalState("modal", "scale-100");
+  };
+
   return (
     <div className="flex flex-col md:flex-row w-4/5 justify-between items-center mx-auto py-10">
       <div className="md:w-3/6 w-full ">
@@ -22,6 +27,7 @@ const Hero = () => {
           <button
             className="shadow-xl shadow-black text-white 
           bg-[#e32970] hover:bg-[#bd255f] rounded-full p-2"
+            onClick={openModal}
           >
             Create NFT
           </button>
