@@ -32,7 +32,7 @@ const connectWallet = async () => {
 const isWallectConnected = async () => {
   try {
     if (!ethereum) return reportError("Please install Metamask");
-    const accounts = await ethereum.request({ method: "eth_accounts" }); //WRONG: eth_requestAccounts
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" }); //WRONG: eth_requestAccounts
 
     window.ethereum.on("chainChanged", (chainId) => {
       window.location.reload();
@@ -85,10 +85,10 @@ const getAllNFTs = async () => {
 
 const mintNFT = async ({ title, description, metadataURI, price }) => {
   try {
-    price = window.web3.utils.toWei(price.toString(), "ether");
+    price = window.web3.utils.toWei(price.toString(), "ether"); //convert the price to Wei, hoping that the price wss sent in ether
     const contract = await getEtheriumContract();
     const account = getGlobalState("connectedAccount");
-    const mintPrice = window.web3.utils.toWei("0.01", "ether");
+    const mintPrice = window.web3.utils.toWei("0.01", "ether"); //0.01 is the amount used in minting ether on this platform
 
     await contract.methods
       .payToMint(title, description, metadataURI, price)

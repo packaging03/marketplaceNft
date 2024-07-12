@@ -1,7 +1,10 @@
 import React from "react";
 import timelessLogo from "../assets/timeless.png";
+import { connectWallet } from "../Blockchain.services";
+import { truncate, useGlobalState } from "../store";
 
 const Header = () => {
+  const [connectedAccount] = useGlobalState("connectedAccount");
   return (
     <div
       className="w-4/5 flex justify-between md:justify-center 
@@ -22,9 +25,18 @@ const Header = () => {
         <li className="mx-4 cursor-pointer">Community</li>
       </ul>
       {/* Connect button */}
-      <button className="shadow-xl shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2 rounded-full">
-        Connect Wallet
-      </button>
+      {connectedAccount ? (
+        <button className="shadow-xl shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2 rounded-full">
+          {truncate(connectedAccount, 4, 4, 11)}
+        </button>
+      ) : (
+        <button
+          className="shadow-xl shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2 rounded-full"
+          onClick={connectWallet}
+        >
+          Connect Wallet
+        </button>
+      )}
     </div>
   );
 };
