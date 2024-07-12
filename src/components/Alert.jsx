@@ -1,4 +1,6 @@
 import React from "react";
+import { FaRegTimesCircle } from "react-icons/fa";
+import { BsCheck2Circle } from "react-icons/bs";
 
 const Alert = () => {
   return (
@@ -8,16 +10,14 @@ const Alert = () => {
       duration-300 scale-100`}
     >
       <div
-        className="bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl
-      min-w-min px-10 pb-2"
+        className="flex flex-col justify-center items-center bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl
+      min-w-min px-10 py-3"
       >
-        <div className="flex flex-col text-white">
-          <div className="flex justify-center items-center">
-            <div className="lds-dual-ring scale-50"></div>
-            <p className="text-lg">Alerting</p>
-          </div>
-          <small className="text-center">Alert Message</small>
-        </div>
+        {/* <FaRegTimesCircle className="text-red-600 text-4xl" />
+        <p className="text-white">Message...</p> */}
+
+        <BsCheck2Circle className="text-green-600 text-4xl" />
+        <p className="text-white">Message...</p>
       </div>
     </div>
   );
