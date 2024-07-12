@@ -1,9 +1,31 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import { setGlobalState, useGlobalState } from "../store";
-
+import {
+  setAlert,
+  setGlobalState,
+  setLoadingMsg,
+  useGlobalState,
+} from "../store";
+import { create } from "ipfs-http-client";
+import { mintNFT } from "../Blockchain.services";
 const imgHero =
   "https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg";
+
+const auth =
+  "Basic " +
+  Buffer.from(
+    "2Gg95YqQ672apEtGQbewfwGQANc" + ":" + "b2c85789868e83772bfbc59ddd6d09bb"
+    //process.env.REACT_APP_INFURIA_PID + ':' + process.env.REACT_APP_INFURIA_API,
+  ).toString("base64");
+
+const client = create({
+  host: "ipfs.infura.io",
+  port: "5001",
+  protocol: "https",
+  headers: {
+    authorization: auth,
+  },
+});
 
 const CreateNFT = () => {
   const [modal] = useGlobalState("modal");
@@ -13,11 +35,36 @@ const CreateNFT = () => {
   const [fileUrl, setFileUrl] = useState("");
   const [imgBase64, setImgBase64] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title || !description || !price) return;
-    console.log("Minting...");
-    closeModal();
+    setGlobalState("modal", "scale-0");
+    setLoadingMsg("Uploading to IPFS...");
+
+    try {
+      const created = await client.add(fileUrl);
+      const metadataURI = `http://ipfs.io/ipfs/${created.path}`;
+      setLoadingMsg("Uploaded!, approve transaction now...");
+      const nft = { title, description, price, metadataURI };
+
+      await mintNFT(nft);
+      closeModal();
+      setAlert("Minting completed successfully");
+      //   window.location.reload();
+    } catch (e) {
+      console.log("Error uploading file: ", error);
+      setAlert("Minting failed...", "red");
+    }
+  };
+
+  const changeImage = async (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
+    reader.onload = (readerEvent) => {
+      const file = readerEvent.target.result;
+      setImgBase64(file);
+      setFileUrl(e.target.files[0]);
+    };
   };
 
   const closeModal = () => {
@@ -67,7 +114,12 @@ const CreateNFT = () => {
                 type="file"
                 accept="image/png, image/gif, image/jpg, image/jpeg image/webp"
                 required
-                className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold hover:file:bg-[#1d2631] focus:outline-none cursor-pointer focus:ring-0"
+                className="block w-full text-sm text-slate-500 
+                file:mr-4 file:py-2 file:px-4 file:rounded-full 
+                file:border-0 file:text-sm file:font-semibold 
+                hover:file:bg-[#1d2631] focus:outline-none 
+                cursor-pointer focus:ring-0"
+                onChange={changeImage}
               />
             </label>
           </div>
