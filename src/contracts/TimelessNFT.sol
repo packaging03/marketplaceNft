@@ -49,9 +49,7 @@ contract TimelessNFT is ERC721Enumerable, Ownable {
         royaltyFee = _royaltyFee;
         artist = _artist;
     }
-
 //
-
     function payToMint(
         string memory title,
         string memory description,
@@ -127,5 +125,5 @@ contract TimelessNFT is ERC721Enumerable, Ownable {
     function getAllTransactions() external view returns (TransactionStruct[] memory) {
         return transactions;
     }
-    
+
 }
