@@ -13,12 +13,17 @@ const ShowNFT = () => {
     setGlobalState("showModal", "scale-0");
   };
 
+  const onChangePrice = () => {
+    setGlobalState("showModal", "scale-0");
+    setGlobalState("updateModal", "scale-100");
+  };
+
   return (
     <div
       className={`fixed top-0 left-0  w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${modal}`}
     >
       <div className="bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl w-11/12 md:w-2/5 h-7/12 p-6">
-        <form className="flex flex-col">
+        <div className="flex flex-col">
           <div className="flex justify-between items-center text-gray-400">
             <p className="font-semibold">Buy NFT</p>
             <button
@@ -74,11 +79,16 @@ const ShowNFT = () => {
             <button className="flex justify-center items-center p-2 mt-5 w-full shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] rounded-full">
               View Purchase
             </button>
-            {/* <button className="flex justify-center items-center p-2 mt-5 w-full shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] rounded-full">
+            <button
+              className="flex justify-center items-center p-2 mt-5 w-full
+             shadow-lg shadow-black text-white 
+             bg-[#e32970] hover:bg-[#bd255f] rounded-full"
+              onClick={onChangePrice}
+            >
               Change Price
-            </button> */}
+            </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
