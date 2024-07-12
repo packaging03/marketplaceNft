@@ -9,7 +9,7 @@ const Alert = () => {
     <div
       className={`fixed top-0 left-0  w-screen h-screen flex items-center 
       justify-center bg-black bg-opacity-50 transform transition-transform 
-      duration-300 scale-100`}
+      duration-300 ${alert.show ? "scale-100" : "scale-0"}`}
     >
       <div
         className="flex flex-col justify-center items-center bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl

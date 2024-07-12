@@ -5,7 +5,7 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
   showModal: "scale-0",
   updateModal: "scale-0",
   loading: { show: false, msg: "" },
-  alert: { show: false, msg: "Minting failed", color: "red" },
+  alert: { show: false, msg: "", color: "" },
 });
 
 const setAlert = (msg, color = "green") => {
