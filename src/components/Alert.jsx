@@ -1,8 +1,10 @@
 import React from "react";
 import { FaRegTimesCircle } from "react-icons/fa";
 import { BsCheck2Circle } from "react-icons/bs";
+import { useGlobalState } from "../store";
 
 const Alert = () => {
+  const [alert] = useGlobalState("alert");
   return (
     <div
       className={`fixed top-0 left-0  w-screen h-screen flex items-center 
@@ -13,11 +15,13 @@ const Alert = () => {
         className="flex flex-col justify-center items-center bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl
       min-w-min px-10 py-3"
       >
-        {/* <FaRegTimesCircle className="text-red-600 text-4xl" />
-        <p className="text-white">Message...</p> */}
+        {alert.color == "red" ? (
+          <FaRegTimesCircle className="text-red-600 text-4xl" />
+        ) : (
+          <BsCheck2Circle className="text-green-600 text-4xl" />
+        )}
 
-        <BsCheck2Circle className="text-green-600 text-4xl" />
-        <p className="text-white">Message...</p>
+        <p className="text-white">{alert.msg}</p>
       </div>
     </div>
   );
