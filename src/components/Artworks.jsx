@@ -27,33 +27,39 @@ const Artworks = () => {
   );
 };
 
-const Card = ({ nft }) => (
-  <div
-    className="w-full shadow-xl shadow-black 
+const Card = ({ nft }) => {
+  const setNft = () => {
+    setGlobalState("nft", nft);
+    setGlobalState("showModal", "scale-100");
+  };
+  return (
+    <div
+      className="w-full shadow-xl shadow-black 
   rounded-md overflow-hidden bg-gray-800 my-2 p-3"
-  >
-    <img
-      src={nft.metadataURI}
-      alt={nft.title}
-      className="h-60 w-full object-cover shadow-lg shadow-black rounded-lg mb-3"
-    />
-    <h4 className="text-white font-semibold">{nft.title}</h4>
-    <p className="text-gray-400 text-sm my-1">{nft.description}</p>
-    <div className="flex justify-between items-centermt-3 text-white">
-      <div className="flex flex-col">
-        <small className="text-xs">Current Price</small>
-        <p className="text-sm font-semibold">{nft.cost} ETH</p>
-      </div>
-      <button
-        className="shadow-lg shadow-black text-sm 
+    >
+      <img
+        src={nft.metadataURI}
+        alt={nft.title}
+        className="h-60 w-full object-cover shadow-lg shadow-black rounded-lg mb-3"
+      />
+      <h4 className="text-white font-semibold">{nft.title}</h4>
+      <p className="text-gray-400 text-sm my-1">{nft.description}</p>
+      <div className="flex justify-between items-centermt-3 text-white">
+        <div className="flex flex-col">
+          <small className="text-xs">Current Price</small>
+          <p className="text-sm font-semibold">{nft.cost} ETH</p>
+        </div>
+        <button
+          className="shadow-lg shadow-black text-sm 
       bg-[#e32970] hover:bg-[#bd255f] 
       rounded-full px-1.5 py-1"
-        onClick={() => setGlobalState("showModal", "scale-100")}
-      >
-        View Details
-      </button>
+          onClick={setNft}
+        >
+          View Details
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Artworks;

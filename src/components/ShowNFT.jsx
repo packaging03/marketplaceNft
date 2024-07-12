@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import Identicon from "react-identicons";
-import { setGlobalState, useGlobalState } from "../store";
+import { setGlobalState, truncate, useGlobalState } from "../store";
 
 const imgHero =
   "https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg";
 
 const ShowNFT = () => {
   const [modal] = useGlobalState("showModal");
+  const [connectedAccount] = useGlobalState("connectedAccount");
+  const [nft] = useGlobalState("nft");
 
   const closeModal = () => {
     setGlobalState("showModal", "scale-0");
@@ -16,6 +18,7 @@ const ShowNFT = () => {
   const onChangePrice = () => {
     setGlobalState("showModal", "scale-0");
     setGlobalState("updateModal", "scale-100");
+    setGlobalState("nft", nft);
   };
 
   return (
@@ -39,46 +42,39 @@ const ShowNFT = () => {
             <div className="shrink-0 h-40 w-40 rounded-xl overflow-hidden">
               <img
                 className="h-full w-full object-cover cursor-pointer"
-                src={imgHero}
-                alt="NFT Logo"
+                src={nft?.metadataURI}
+                alt={nft?.title}
               />
             </div>
           </div>
 
           <div className="flex flex-col justify-start rounded-xl mt-5">
-            <h4 className="text-white font-semibold">Title</h4>
-            <p className="text-gray-400 text-xs my-1 ">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
+            <h4 className="text-white font-semibold">{nft?.title}</h4>
+            <p className="text-gray-400 text-xs my-1 ">{nft?.description}</p>
             <div className="flex justify-between items-center mt-3 text-white">
               <div className="flex justify-start items-center">
                 <Identicon
-                  string={"fjdj"}
+                  string={nft?.owner}
                   size={50}
                   className="h-10 object-contain rounded-full mr-3"
                 />
                 <div className="flex flex-col justify-center items-start">
                   <small className="text-white font-bold">@Owner</small>
                   <small className="text-pink-800 font-semibold">
-                    0x31...0372
+                    {truncate(nft?.owner, 4, 4, 11)}
                   </small>
                 </div>
               </div>
 
               <div className="flex flex-col text-white">
                 <small className="text-xs">Current Price</small>
-                <p className="text-sm font-semibold">0.34 ETH</p>
+                <p className="text-sm font-semibold">{nft?.cost} ETH</p>
               </div>
             </div>
           </div>
 
-          <div className="flex justify-between items-center space-x-2">
-            <button className="flex justify-center items-center p-2 mt-5 w-full shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] rounded-full">
-              View Purchase
-            </button>
+          {/* <div className="flex justify-between items-center space-x-2"> */}
+          {connectedAccount == nft?.owner ? (
             <button
               className="flex justify-center items-center p-2 mt-5 w-full
              shadow-lg shadow-black text-white 
@@ -87,7 +83,12 @@ const ShowNFT = () => {
             >
               Change Price
             </button>
-          </div>
+          ) : (
+            <button className="flex justify-center items-center p-2 mt-5 w-full shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] rounded-full">
+              View Purchase
+            </button>
+          )}
+          {/* </div> */}
         </div>
       </div>
     </div>
