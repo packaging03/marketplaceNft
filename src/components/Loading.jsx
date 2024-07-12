@@ -1,10 +1,13 @@
 import React from "react";
-import { FaTimes } from "react-icons/fa";
+import { useGlobalState } from "../store";
 
 const Loading = () => {
+  const [loading] = useGlobalState("loading");
   return (
     <div
-      className={`fixed top-0 left-0  w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 scale-100`}
+      className={`fixed top-0 left-0  w-screen h-screen flex items-center 
+      justify-center bg-black bg-opacity-50 transform transition-transform 
+      duration-300 scale-100 ${loading.show ? "scale-100" : "scale-0"}`}
     >
       <div
         className="bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl
@@ -15,7 +18,7 @@ const Loading = () => {
             <div className="lds-dual-ring scale-50"></div>
             <p className="text-lg">Processing</p>
           </div>
-          <small className="text-center">Message</small>
+          <small className="text-center">{loading.msg}</small>
         </div>
       </div>
     </div>
