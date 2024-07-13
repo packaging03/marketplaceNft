@@ -1,11 +1,13 @@
 import React from "react";
 import Identicon from "react-identicons";
-import { setGlobalState } from "../store";
+import { setGlobalState, truncate, useGlobalState } from "../store";
 
 const imgHero =
   "https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg";
 
 const Hero = () => {
+  const [connectedAccount] = useGlobalState("connectedAccount");
+
   const openModal = () => {
     setGlobalState("modal", "scale-100");
   };
@@ -61,11 +63,13 @@ const Hero = () => {
         <div className="flex justify-start items-center p-3">
           <Identicon
             className="h-10 w-10 object-contain rounded"
-            string="0x21...784a"
+            string={connectedAccount}
             size={50}
           />
           <div>
-            <p className="text-white font-semibold">0x21...784a</p>
+            <p className="text-white font-semibold">
+              {truncate(connectedAccount, 4, 4, 11)}
+            </p>
             <small className="text-pink-800 font-bold">@you</small>
           </div>
         </div>

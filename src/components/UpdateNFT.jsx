@@ -1,19 +1,38 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import { setGlobalState, useGlobalState } from "../store";
+import {
+  setAlert,
+  setGlobalState,
+  setLoadingMsg,
+  useGlobalState,
+} from "../store";
+import { updateNFT } from "../Blockchain.services";
 
 const imgHero =
   "https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg";
 
 const UpdateNFT = () => {
   const [modal] = useGlobalState("updateModal");
-  const [price, setPrice] = useState("");
+  const [nft] = useGlobalState("nft");
+  const [price, setPrice] = useState(nft?.cost);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!price) return;
-    console.log("Updating...");
-    closeModal();
+    if (!price || price <= 0) return;
+
+    setGlobalState("modal", "scale-0");
+    setLoadingMsg("Initializing price update...");
+
+    try {
+      setLoadingMsg("Price updating...");
+      setGlobalState("updateModal", "scale-0");
+      await updateNFT({ id: nft?.id, cost: price });
+      setAlert("Price updated!...");
+      window.location.reload();
+    } catch (error) {
+      console.log("Error updating price: ", error);
+      setAlert("Update failed...", "red");
+    }
   };
 
   const closeModal = () => {

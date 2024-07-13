@@ -1,8 +1,11 @@
 import React from "react";
 import { BiTransfer } from "react-icons/bi";
 import { MdOpenInNew } from "react-icons/md";
+import { truncate } from "../store";
 
 const Transactions = () => {
+  const [transactions] = useGlobalState("transactions");
+
   return (
     <div className="bg-[#151c25]">
       <div className="w-4/5 py-10 mx-auto">
@@ -11,13 +14,9 @@ const Transactions = () => {
         </h4>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4 lg:gap-2 py-2.5">
-          {Array(3)
-            .fill()
-            .map((nft, i) => (
-              <Transaction key={i} tx={i + 1}>
-                Transaction
-              </Transaction>
-            ))}
+          {transactions.map((tx, i) => (
+            <Transaction key={i} tx={tx} />
+          ))}
         </div>
 
         <div className="text-center my-5">
@@ -40,17 +39,17 @@ const Transaction = ({ tx }) => (
     </div>
 
     <div>
-      <h4 className="text-sm">#{tx} Fund Transfered</h4>
+      <h4 className="text-sm">NFT Fund Transfered</h4>
       <small className="flex justify-start items-center">
         <span className="mr-1">Received by</span>
         <a className="text-pink-500 mr-2" href="#" target="_blank">
-          0x31...037e
+          {truncate(tx?.owner, 4, 4, 11)}
         </a>
         <MdOpenInNew />
       </small>
     </div>
 
-    <p className="text-sm font-medium">0.32 ETH</p>
+    <p className="text-sm font-medium">{tx?.cost} ETH</p>
   </div>
 );
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import Identicon from "react-identicons";
 import { setGlobalState, truncate, useGlobalState } from "../store";
+import { buyNFT } from "../Blockchain.services";
 
 const imgHero =
   "https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg";
@@ -19,6 +20,18 @@ const ShowNFT = () => {
     setGlobalState("showModal", "scale-0");
     setGlobalState("updateModal", "scale-100");
     setGlobalState("nft", nft);
+  };
+
+  const handlePurchase = async () => {
+    try {
+      setLoadingMsg("Purchasing, awaiting approval...");
+      await buyNFT(nft);
+      setAlert("NFT purchased!...");
+      window.location.reload();
+    } catch (error) {
+      console.log("Error updating price: ", error);
+      setAlert("Purchase failed...", "red");
+    }
   };
 
   return (
@@ -61,7 +74,7 @@ const ShowNFT = () => {
                 <div className="flex flex-col justify-center items-start">
                   <small className="text-white font-bold">@Owner</small>
                   <small className="text-pink-800 font-semibold">
-                    {truncate(nft?.owner, 4, 4, 11)}
+                    {nft?.owner ? truncate(nft?.owner, 4, 4, 11) : ""}
                   </small>
                 </div>
               </div>
@@ -84,7 +97,11 @@ const ShowNFT = () => {
               Change Price
             </button>
           ) : (
-            <button className="flex justify-center items-center p-2 mt-5 w-full shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] rounded-full">
+            <button
+              className="flex justify-center items-center p-2 mt-5 w-full 
+            shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] rounded-full"
+              onClick={handlePurchase}
+            >
               View Purchase
             </button>
           )}
