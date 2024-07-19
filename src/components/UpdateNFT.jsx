@@ -30,7 +30,6 @@ const UpdateNFT = () => {
       setAlert("Price updated!...");
       window.location.reload();
     } catch (error) {
-      console.log("Error updating price: ", error);
       setAlert("Update failed...", "red");
     }
   };

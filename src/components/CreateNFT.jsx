@@ -52,7 +52,6 @@ const CreateNFT = () => {
       setAlert("Minting completed successfully");
       //   window.location.reload();
     } catch (e) {
-      console.log("Error uploading file: ", error);
       setAlert("Minting failed...", "red");
     }
   };

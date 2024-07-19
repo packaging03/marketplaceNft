@@ -23,14 +23,12 @@ const ShowNFT = () => {
   };
 
   const handlePurchase = async () => {
-    console.log("Purchase called");
     try {
       setLoadingMsg("Purchasing, awaiting approval...");
       await buyNFT(nft);
       setAlert("NFT purchased!...");
       window.location.reload();
     } catch (error) {
-      console.log("Error updating price: ", error);
       setAlert("Purchase failed...", "red");
     }
   };
