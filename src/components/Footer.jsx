@@ -2,6 +2,8 @@ import React from "react";
 import timelessLogo from "../assets/timeless.png";
 
 const Footer = () => {
+  const d = new Date();
+  let year = d.getFullYear();
   return (
     <div className="w-full flex  justify-between items-center md:justify-center gradient-bg-footer p-4">
       <div className="w-full flex sm:flex-row flex-col justify-between items-center my-4">
@@ -18,7 +20,7 @@ const Footer = () => {
 
         <div className="flex flex-[0.25] justify-center items-center">
           <p className="text-white text-right text-sm">
-            &copy; 2022. All rights reserved
+            &copy; {year}. All rights reserved
           </p>
         </div>
       </div>

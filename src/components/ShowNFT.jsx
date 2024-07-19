@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import Identicon from "react-identicons";
-import { setGlobalState, truncate, useGlobalState } from "../store";
+import { setAlert, setGlobalState, setLoadingMsg, truncate, useGlobalState } from "../store";
 import { buyNFT } from "../Blockchain.services";
 
 const imgHero =
@@ -23,6 +23,7 @@ const ShowNFT = () => {
   };
 
   const handlePurchase = async () => {
+    console.log("Purchase called");
     try {
       setLoadingMsg("Purchasing, awaiting approval...");
       await buyNFT(nft);
