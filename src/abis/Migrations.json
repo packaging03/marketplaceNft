@@ -1914,12 +1914,12 @@
     "1720802151018": {
       "events": {},
       "links": {},
-      "address": "0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab",
-      "transactionHash": "0x79ebf0355ce64f8c0c1cbf8d604641c378e7d6d9ab6fab80d02bd8e6ea4ea7d0"
+      "address": "0x59d3631c86BbE35EF041872d502F218A39FBa150",
+      "transactionHash": "0x1a3679bdde337b0320bb4ee670f33276a432dd80a61b7a04070c6db8e2b9aca6"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-07-12T16:51:48.252Z",
+  "updatedAt": "2024-07-19T06:54:40.434Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

@@ -129,7 +129,7 @@ const updateNFT = async ({ id, cost }) => {
 };
 
 const reportError = (error) => {
-  setAlert(JSON.stringify(error), "red");
+  setAlert(JSON.stringify({ message: error }), "red");
 };
 
 export {
